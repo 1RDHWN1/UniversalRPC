@@ -65,10 +65,11 @@ public static class WindowDetector
         ProductName = info?.ProductName ?? "",
         CompanyName = info?.CompanyName ?? "",
         Title = cleanTitle,
-        Category = CategoryEngine.GetCategory(
-            process.ProcessName,
-            info?.ProductName ?? ""
-        )
+       Category = CategoryEngine.GetCategory(
+        process.ProcessName,
+        info?.ProductName ?? "",
+        info?.CompanyName ?? ""
+    )
     };
 }
 }

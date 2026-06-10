@@ -1,59 +1,44 @@
 public static class CategoryEngine
 {
-    public static string GetCategory(
-        string processName,
-        string productName
-    )
+public static string GetCategory(
+    string processName,
+    string productName,
+    string companyName
+)
+{
+    var apps = AppDatabase.Load();
+
+    if (apps.TryGetValue(processName, out var app))
     {
-        processName = processName.ToLower();
-        productName = productName.ToLower();
-
-        // Coding
-        if (processName.Contains("code"))
-            return "coding";
-
-        if (productName.Contains("visual studio"))
-            return "coding";
-
-        // Design
-        if (productName.Contains("canva"))
-            return "design";
-
-        if (productName.Contains("photoshop"))
-            return "design";
-
-        // Browser
-        if (processName.Contains("chrome"))
-            return "browser";
-
-        if (processName.Contains("msedge"))
-            return "browser";
-
-        if (processName.Contains("firefox"))
-            return "browser";
-
-        // Communication
-        if (productName.Contains("discord"))
-            return "communication";
-
-        if (productName.Contains("telegram"))
-            return "communication";
-
-        // Game Development
-        if (productName.Contains("unity"))
-            return "gamedev";
-
-        if (productName.Contains("unreal"))
-            return "gamedev";
-
-        // 3D
-        if (productName.Contains("blender"))
-            return "3d";
-
-        // Streaming
-        if (productName.Contains("obs"))
-            return "streaming";
-
-        return "general";
+        return app.Category;
     }
+
+    string category =
+        LearningEngine.GuessCategory(
+            processName,
+            productName,
+            companyName
+        );
+if (category == "unknown")
+{
+    UnknownAppDatabase.Add(
+        new UnknownApp
+        {
+            ProcessName = processName,
+            ProductName = productName,
+            CompanyName = companyName
+        }
+    );
+}
+    apps[processName] = new AppEntry
+    {
+        DisplayName = productName,
+        Company = companyName,
+        Category = category
+    };
+
+    AppDatabase.Save(apps);
+
+    return category;
+}
 }

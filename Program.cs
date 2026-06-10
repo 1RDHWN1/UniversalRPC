@@ -1,7 +1,19 @@
 ﻿class Program
 {
-    static void Main()
-    {
+    static void Main(string[] args)
+    { if (
+    args.Length > 0 &&
+    args[0].Equals(
+        "migrate",
+        StringComparison.OrdinalIgnoreCase
+    )
+)
+{
+    MigrationManager
+        .MigrateUnknownApps();
+
+    return;
+}
         var rpc =
             new PresenceManager(
                 "1514195252326563930"

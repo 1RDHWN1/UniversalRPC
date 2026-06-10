@@ -1,0 +1,42 @@
+[
+  {
+    "ProcessName": "WindowsTerminal",
+    "ProductName": "Windows Terminal",
+    "CompanyName": "Microsoft Corporation"
+  },
+  {
+    "ProcessName": "RobloxPlayerInstaller",
+    "ProductName": "Roblox Bootstrapper",
+    "CompanyName": "Roblox Corporation"
+  },
+  {
+    "ProcessName": "RobloxPlayerBeta",
+    "ProductName": "Roblox",
+    "CompanyName": "Roblox Corporation"
+  },
+  {
+    "ProcessName": "explorer",
+    "ProductName": "Microsoft\u00AE Windows\u00AE Operating System",
+    "CompanyName": "Microsoft Corporation"
+  },
+  {
+    "ProcessName": "ShellHost",
+    "ProductName": "Microsoft\u00AE Windows\u00AE Operating System",
+    "CompanyName": "Microsoft Corporation"
+  },
+  {
+    "ProcessName": "ShellExperienceHost",
+    "ProductName": "Microsoft\u00AE Windows\u00AE Operating System",
+    "CompanyName": "Microsoft Corporation"
+  },
+  {
+    "ProcessName": "SnippingTool",
+    "ProductName": "Snipping Tool",
+    "CompanyName": "Microsoft Corporation"
+  },
+  {
+    "ProcessName": "SearchHost",
+    "ProductName": "Microsoft\u00AE Windows\u00AE Operating System",
+    "CompanyName": "Microsoft Corporation"
+  }
+]

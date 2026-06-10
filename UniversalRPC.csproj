@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+    <PackageReference Include="System.Net.Http.Json" Version="10.0.9" />
   </ItemGroup>
 
 </Project>

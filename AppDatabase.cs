@@ -9,26 +9,46 @@ public class AppEntry
 
 public static class AppDatabase
 {
-    private static string FilePath = "apps.json";
+    private static readonly string FilePath = "apps.json";
 
-    public static Dictionary<string, AppEntry> Load()
-    {
-        if (!File.Exists(FilePath))
-            return new();
+   public static Dictionary<string, AppEntry> Load()
+{
+    if (!File.Exists(FilePath))
+        return new Dictionary<string, AppEntry>();
 
-        string json = File.ReadAllText(FilePath);
+    string json = File.ReadAllText(FilePath);
 
-        return JsonSerializer.Deserialize<
+    var apps =
+        JsonSerializer.Deserialize<
             Dictionary<string, AppEntry>
-        >(json) ?? new();
+        >(json)
+        ?? new Dictionary<string, AppEntry>();
+
+    bool changed = false;
+
+    foreach (var app in apps.Values)
+    {
+        if (app.Category == "general")
+        {
+            app.Category = "unknown";
+            changed = true;
+        }
     }
 
+    if (changed)
+    {
+        Save(apps);
+    }
+
+    return apps;
+}
+
     public static void Save(
-        Dictionary<string, AppEntry> data
+        Dictionary<string, AppEntry> apps
     )
     {
         string json = JsonSerializer.Serialize(
-            data,
+            apps,
             new JsonSerializerOptions
             {
                 WriteIndented = true

@@ -1,11 +1,25 @@
 {
   "version": 2,
-  "dgSpecHash": "Cwb2RRm3CsM=",
+  "dgSpecHash": "BFXJzL038HY=",
   "success": true,
   "projectFilePath": "C:\\Projects\\UniversalRPC\\UniversalRPC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eniku\\.nuget\\packages\\discordrichpresence\\1.6.1.70\\discordrichpresence.1.6.1.70.nupkg.sha512",
-    "C:\\Users\\eniku\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\eniku\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\eniku\\.nuget\\packages\\system.net.http.json\\10.0.9\\system.net.http.json.10.0.9.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference System.Net.Http.Json will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Projects\\UniversalRPC\\UniversalRPC.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Projects\\UniversalRPC\\UniversalRPC.csproj",
+      "libraryId": "System.Net.Http.Json",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
