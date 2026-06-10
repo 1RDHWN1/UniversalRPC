@@ -57,4 +57,18 @@ public static class UnknownAppDatabase
 
         Save(apps);
     }
+public static void Remove(
+    string processName
+)
+{
+    var apps = Load();
+
+    apps.RemoveAll(x =>
+        x.ProcessName ==
+        processName
+    );
+
+    Save(apps);
+}
+
 }

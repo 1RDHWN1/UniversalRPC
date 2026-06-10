@@ -8,10 +8,17 @@ public static string GetCategory(
 {
     var apps = AppDatabase.Load();
 
-    if (apps.TryGetValue(processName, out var app))
-    {
-        return app.Category;
-    }
+   if (
+    apps.TryGetValue(
+        processName,
+        out var app
+    )
+    &&
+    app.Category != "unknown"
+)
+{
+    return app.Category;
+}
 
     string category =
         LearningEngine.GuessCategory(
@@ -21,15 +28,30 @@ public static string GetCategory(
         );
 if (category == "unknown")
 {
-    UnknownAppDatabase.Add(
+    var unknownApp =
         new UnknownApp
         {
-            ProcessName = processName,
-            ProductName = productName,
-            CompanyName = companyName
-        }
+            ProcessName =
+                processName,
+
+            ProductName =
+                productName,
+
+            CompanyName =
+                companyName
+        };
+
+    UnknownAppDatabase.Add(
+        unknownApp
     );
+
+    _ = AiLearningManager
+        .LearnApp(
+            unknownApp
+        );
 }
+    if (category != "unknown")
+{
     apps[processName] = new AppEntry
     {
         DisplayName = productName,
@@ -38,6 +60,7 @@ if (category == "unknown")
     };
 
     AppDatabase.Save(apps);
+}
 
     return category;
 }

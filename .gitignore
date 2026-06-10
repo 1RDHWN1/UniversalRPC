@@ -5,6 +5,9 @@ obj/
 # Visual Studio
 .vs/
 
+# key
+config.json
+
 # VS Code
 .vscode/
 

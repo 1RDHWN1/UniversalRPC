@@ -22,6 +22,16 @@ public class PresenceManager
 
     return "default";
 }
+private string SafeText(string text)
+{
+    if (string.IsNullOrWhiteSpace(text))
+        return "";
+
+    return text.Length > 120
+        ? text[..120]
+        : text;
+}
+
 private string GetCategoryIcon(WindowInfo info)
 {
     return info.Category switch
@@ -31,6 +41,12 @@ private string GetCategoryIcon(WindowInfo info)
         "browser" => "browsing",
         "communication" => "communicating",
         "gaming" => "gaming",
+        "gamedev" => "gamedev",
+        "streaming" => "streaming",
+        "3d" => "3d",
+        "ai" => "ai",
+        "utility" => "utility",
+        "system" => "system",
         _ => "default"
     };
 }
@@ -53,41 +69,69 @@ private string _lastProcess = "";
     string details = info.ProductName;
     string state = info.Title;
 
-    switch (info.Category)
-    {
-        case "coding":
-            details = "💻 Coding";
-            break;
+   switch (info.Category)
+{
+    case "coding":
+        details = "💻 Coding";
+        break;
 
-        case "design":
-            details = "🎨 Designing";
-            break;
+    case "design":
+        details = "🎨 Designing";
+        break;
 
-        case "browser":
-            details = "🌐 Browsing";
-            break;
+    case "browser":
+        details = "🌐 Browsing";
+        break;
 
-        case "communication":
-            details = "💬 Chatting";
-            break;
+    case "communication":
+        details = "💬 Chatting";
+        break;
 
-        case "gamedev":
-            details = "🎮 Game Development";
-            break;
-    }
+    case "gamedev":
+        details = "🎮 Game Development";
+        break;
+
+    case "gaming":
+        details = "🎮 Gaming";
+        break;
+
+    case "ai":
+        details = "🤖 AI Assistant";
+        break;
+
+    case "utility":
+        details = "🛠️ Utility";
+        break;
+
+    case "system":
+        details = "⚙️ System";
+        break;
+
+    case "streaming":
+        details = "📺 Streaming";
+        break;
+
+    case "3d":
+        details = "🧊 3D Modeling";
+        break;
+}
 
     _client.SetPresence(new RichPresence
     {
-        Details = details,
-        State = state,
+        Details = SafeText(details),
+State = SafeText(state),
 
        Assets = new Assets
 {
     LargeImageKey = GetImageKey(info),
-    LargeImageText = info.ProductName,
+    LargeImageText = SafeText(
+    info.ProductName
+),
 
     SmallImageKey = GetCategoryIcon(info),
-    SmallImageText = info.Category
+    SmallImageText = SafeText(
+    info.Category
+)
 },
 
        Timestamps = new Timestamps

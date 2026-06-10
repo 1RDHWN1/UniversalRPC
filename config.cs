@@ -2,7 +2,7 @@ using System.Text.Json;
 
 public class Config
 {
-    public string OpenRouterApiKey { get; set; } = "";
+    public string GoogleApiKey { get; set; } = "";
 }
 
 public static class ConfigManager

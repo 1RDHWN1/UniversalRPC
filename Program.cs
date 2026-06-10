@@ -2,18 +2,34 @@
 {
     static void Main(string[] args)
     { if (
-    args.Length > 0 &&
-    args[0].Equals(
-        "migrate",
-        StringComparison.OrdinalIgnoreCase
+        args.Length > 0 &&
+        args[0].Equals(
+            "migrate",
+            StringComparison.OrdinalIgnoreCase
+        )
     )
-)
-{
-    MigrationManager
-        .MigrateUnknownApps();
+    {
+        MigrationManager
+            .MigrateUnknownApps();
 
-    return;
-}
+        return;
+    }
+
+    if (
+        args.Length > 0 &&
+        args[0].Equals(
+            "classify",
+            StringComparison.OrdinalIgnoreCase
+        )
+    )
+    {
+        ClassifyManager
+            .Run()
+            .GetAwaiter()
+            .GetResult();
+
+        return;
+    }
         var rpc =
             new PresenceManager(
                 "1514195252326563930"
