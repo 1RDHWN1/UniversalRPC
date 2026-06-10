@@ -8,6 +8,9 @@ public class AppEntry
 }
 public static class AppDatabase
 {
+
+
+    
     private static readonly string FilePath = "apps.json";
 
    public static Dictionary<string, AppEntry> Load()
@@ -45,6 +48,7 @@ public static class AppDatabase
     public static void Save(
         Dictionary<string, AppEntry> apps
     )
+    
     {
         string json = JsonSerializer.Serialize(
             apps,
@@ -56,4 +60,11 @@ public static class AppDatabase
 
         File.WriteAllText(FilePath, json);
     }
+
+public static void Reload()
+{
+    Load();
+}
+    
+
 }

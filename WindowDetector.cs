@@ -56,7 +56,24 @@ public static WindowInfo GetActiveWindow()
         GetWindowThreadProcessId(hwnd, out uint pid);
 
         Process process =
-            Process.GetProcessById((int)pid);
+    Process.GetProcessById((int)pid);
+
+if (
+    process.ProcessName.Equals(
+        "UniversalRPC",
+        StringComparison.OrdinalIgnoreCase
+    )
+)
+{
+    return new WindowInfo
+    {
+        ProcessName = "ignored",
+        ProductName = "ignored",
+        CompanyName = "",
+        Title = "",
+        Category = "system"
+    };
+}
 
         string productName =
             process.ProcessName;

@@ -1,11 +1,32 @@
-﻿class Program
+﻿using Microsoft.Win32;
+using System.Threading;
+using System.Windows.Forms;
+class Program
 {
-    static void Main(string[] args)
-    { 
-    
+static void Main(string[] args)
+{
+    TrayManager.Initialize();
+
+    Mutex mutex =
+        new(
+            true,
+            "ActivityHub",
+            out bool createdNew
+        );
+
+    if (!createdNew)
+    {
+        return;
+    }
+
+    if (!StartupManager.IsEnabled())
+    {
+        StartupManager.Enable();
+    }
+
     IconManager.LoadIcons();
-            
-        if (
+
+    if (
         args.Length > 0 &&
         args[0].Equals(
             "migrate",
@@ -34,58 +55,61 @@
 
         return;
     }
-        var rpc =
-            new PresenceManager(
-                "1514195252326563930"
-            );
 
-        string lastTitle = "";
+    var rpc =
+        new PresenceManager(
+            "1514195252326563930"
+        );
 
-        while (true)
+    Thread worker =
+        new Thread(() =>
         {
-            try
-            {
-                var info =
-                    WindowDetector.GetActiveWindow();
+            string lastTitle = "";
 
-                                    if (
-                    info.ProductName.Contains(
-                        "Discord",
-                        StringComparison.OrdinalIgnoreCase
+            while (true)
+            {
+                try
+                {
+                    var info =
+                        WindowDetector
+                            .GetActiveWindow();
+
+                    if (
+                        info.ProductName.Contains(
+                            "Discord",
+                            StringComparison.OrdinalIgnoreCase
+                        )
                     )
-                )
+                    {
+                        Thread.Sleep(2000);
+                        continue;
+                    }
+
+                    if (
+                        info.Title !=
+                        lastTitle
+                    )
+                    {
+                        lastTitle =
+                            info.Title;
+
+                        rpc.Update(
+                            info
+                        );
+                    }
+                }
+                catch
                 {
-                    Thread.Sleep(2000);
-                    continue;
                 }
 
-                if (info.Title != lastTitle)
-                {
-                    lastTitle = info.Title;
-
-                    rpc.Update(info);
-
-                    Console.Clear();
-
-                    Console.WriteLine(
-                        $"Category : {info.Category}"
-                    );
-
-                    Console.WriteLine(
-                        $"Product  : {info.ProductName}"
-                    );
-
-                    Console.WriteLine(
-                        $"Title    : {info.Title}"
-                    );
-                }
+                Thread.Sleep(2000);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+        });
 
-            Thread.Sleep(2000);
-        }
-    }
+    worker.IsBackground = true;
+    worker.Start();
+
+    Application.Run();
+}
+
 }
