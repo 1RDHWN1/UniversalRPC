@@ -4,9 +4,8 @@ public class AppEntry
 {
     public string DisplayName { get; set; } = "";
     public string Company { get; set; } = "";
-    public string Category { get; set; } = "unknown";
+    public string Category { get; set; } = "";
 }
-
 public static class AppDatabase
 {
     private static readonly string FilePath = "apps.json";

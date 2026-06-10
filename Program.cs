@@ -1,7 +1,11 @@
 ﻿class Program
 {
     static void Main(string[] args)
-    { if (
+    { 
+    
+    IconManager.LoadIcons();
+            
+        if (
         args.Length > 0 &&
         args[0].Equals(
             "migrate",

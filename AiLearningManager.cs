@@ -35,18 +35,13 @@ public static class AiLearningManager
             var apps =
                 AppDatabase.Load();
 
-            apps[app.ProcessName] =
-                new AppEntry
-                {
-                    DisplayName =
-                        app.ProductName,
-
-                    Company =
-                        app.CompanyName,
-
-                    Category =
-                        category,
-                };
+      apps[app.ProcessName] =
+    new AppEntry
+    {
+        DisplayName = app.ProductName,
+        Company = app.CompanyName,
+        Category = category
+    };
 
             AppDatabase.Save(apps);
             UnknownAppDatabase.Remove(

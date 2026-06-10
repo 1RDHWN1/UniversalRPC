@@ -3,25 +3,7 @@ using DiscordRPC;
 public class PresenceManager
 {
     private readonly DiscordRpcClient _client;
-    private string GetImageKey(WindowInfo info)
-    {
-        string process =
-            info.ProcessName.ToLower();
 
-    string product =
-        info.ProductName.ToLower();
-
-    if (product.Contains("canva"))
-        return "canva";
-
-    if (process.Contains("code"))
-        return "vscode";
-
-    if (process.Contains("chrome"))
-        return "chrome";
-
-    return "default";
-}
 private string SafeText(string text)
 {
     if (string.IsNullOrWhiteSpace(text))
@@ -31,12 +13,11 @@ private string SafeText(string text)
         ? text[..120]
         : text;
 }
-
 private string GetCategoryIcon(WindowInfo info)
 {
     return info.Category switch
     {
-        "coding" => "coding",
+       "softwaredev" => "softwaredev",
         "design" => "design",
         "browser" => "browsing",
         "communication" => "communicating",
@@ -71,9 +52,9 @@ private string _lastProcess = "";
 
    switch (info.Category)
 {
-    case "coding":
-        details = "💻 Coding";
-        break;
+   case "softwaredev":
+    details = "💻 Software Development";
+    break;
 
     case "design":
         details = "🎨 Designing";
@@ -123,7 +104,11 @@ State = SafeText(state),
 
        Assets = new Assets
 {
-    LargeImageKey = GetImageKey(info),
+    LargeImageKey =
+    IconManager.GetIconKey(
+        info.ProcessName,
+        info.ProductName
+    ),
     LargeImageText = SafeText(
     info.ProductName
 ),

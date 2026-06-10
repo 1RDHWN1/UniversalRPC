@@ -44,32 +44,77 @@ public static class WindowDetector
     return title.Trim();
 }
 
-  public static WindowInfo GetActiveWindow()
+public static WindowInfo GetActiveWindow()
 {
-    IntPtr hwnd = GetForegroundWindow();
-
-    StringBuilder title = new(1024);
-    GetWindowText(hwnd, title, title.Capacity);
-
-    GetWindowThreadProcessId(hwnd, out uint pid);
-
-    Process process = Process.GetProcessById((int)pid);
-
-    var info = process.MainModule?.FileVersionInfo;
-
-    string cleanTitle = CleanTitle(title.ToString());
-
-    return new WindowInfo
+    try
     {
-        ProcessName = process.ProcessName,
-        ProductName = info?.ProductName ?? "",
-        CompanyName = info?.CompanyName ?? "",
-        Title = cleanTitle,
-       Category = CategoryEngine.GetCategory(
-        process.ProcessName,
-        info?.ProductName ?? "",
-        info?.CompanyName ?? ""
-    )
-    };
-}
-}
+        IntPtr hwnd = GetForegroundWindow();
+
+        StringBuilder title = new(1024);
+        GetWindowText(hwnd, title, title.Capacity);
+
+        GetWindowThreadProcessId(hwnd, out uint pid);
+
+        Process process =
+            Process.GetProcessById((int)pid);
+
+        string productName =
+            process.ProcessName;
+
+        string companyName =
+            "";
+
+        try
+        {
+            var info =
+                process.MainModule?
+                    .FileVersionInfo;
+
+            productName =
+                info?.ProductName
+                ?? process.ProcessName;
+
+            companyName =
+                info?.CompanyName
+                ?? "";
+        }
+        catch
+        {
+        }
+
+        return new WindowInfo
+        {
+            ProcessName =
+                process.ProcessName,
+
+            ProductName =
+                productName,
+
+            CompanyName =
+                companyName,
+
+            Title =
+                CleanTitle(
+                    title.ToString()
+                ),
+
+            Category =
+                CategoryEngine.GetCategory(
+                    process.ProcessName,
+                    productName,
+                    companyName
+                )
+        };
+    }
+    catch
+    {
+        return new WindowInfo
+        {
+            ProcessName = "unknown",
+            ProductName = "Unknown",
+            CompanyName = "",
+            Title = "",
+            Category = "system"
+        };
+    }
+}}

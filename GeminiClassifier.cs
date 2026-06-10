@@ -23,7 +23,7 @@ Company: {app.CompanyName}
 
 Reply with ONLY ONE WORD from this list:
 
-coding
+softwaredev
 design
 browser
 communication
@@ -61,7 +61,7 @@ No extra text.
             JsonSerializer.Serialize(request);
 
         string url =
-            $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={config.GoogleApiKey}";
+            $"https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent?key={config.GoogleApiKey}";
 
         var response =
             await Client.PostAsync(
@@ -82,15 +82,40 @@ No extra text.
         using var doc =
             JsonDocument.Parse(body);
 
-        string result = doc
+    var parts = doc
     .RootElement
     .GetProperty("candidates")[0]
     .GetProperty("content")
-    .GetProperty("parts")[0]
-    .GetProperty("text")
-    .GetString()!
-    .Trim()
-    .ToLower();
+    .GetProperty("parts");
+
+string result = "";
+
+foreach (var part in parts.EnumerateArray())
+{
+    if (
+        part.TryGetProperty(
+            "thought",
+            out _
+        )
+    )
+    {
+        continue;
+    }
+
+    if (
+        part.TryGetProperty(
+            "text",
+            out var text
+        )
+    )
+    {
+        result =
+            text.GetString() ?? "";
+    }
+}
+
+result =
+    result.Trim().ToLower();
 
 Console.WriteLine(
     $"[AI RAW] {result}"
@@ -98,7 +123,7 @@ Console.WriteLine(
 
 string[] validCategories =
 {
-    "coding",
+    "softwaredev",
     "design",
     "browser",
     "communication",
