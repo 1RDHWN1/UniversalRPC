@@ -1,0 +1,23 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# User settings
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Auto-learning database
+apps.json
+sites.json
