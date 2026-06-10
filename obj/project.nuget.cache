@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Cwb2RRm3CsM=",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\UniversalRPC\\UniversalRPC.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\eniku\\.nuget\\packages\\discordrichpresence\\1.6.1.70\\discordrichpresence.1.6.1.70.nupkg.sha512",
+    "C:\\Users\\eniku\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
